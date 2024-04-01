@@ -1,17 +1,17 @@
 <nav class="navbar bg-base-100">
   <div class="navbar-start">
-    <a href="/" class="btn btn-ghost normal-case text-xl <%= page == "/" ? 'active' : '' %>">Lego Set Collections</a>
+    <a href="/" class="btn btn-ghost normal-case text-xl <%= page === '/' ? 'active' : '' %>">Lego Set Collections</a>
   </div>
   <div class="navbar-end">
     <ul class="menu menu-horizontal p-0">
-      <li><a class="<%= page == "/about" ? 'active' : '' %>" href="/about">About</a></li>
+      <li><a class="<%= page === '/about' ? 'active' : '' %>" href="/about">About</a></li>
       <li>
         <details>
           <summary>Select Theme</summary>
           <ul class="menu bg-base-100">
-            <li><a class="<%= activeTheme === 'City' ? 'active' : '' %>" href="/lego/sets?theme=City">Urban</a></li>
-            <li><a class="<%= activeTheme === 'Space' ? 'active' : '' %>" href="/lego/sets?theme=Space">Cosmos</a></li>
-            <li><a class="<%= activeTheme === 'Castle' ? 'active' : '' %>" href="/lego/sets?theme=Castle">Fortress</a></li>
+            <li><a class="<%= page === '/lego/sets' && activeTheme === 'City' ? 'active' : '' %>" href="/lego/sets?theme=City">Urban</a></li>
+            <li><a class="<%= page === '/lego/sets' && activeTheme === 'Space' ? 'active' : '' %>" href="/lego/sets?theme=Space">Cosmos</a></li>
+            <li><a class="<%= page === '/lego/sets' && activeTheme === 'Castle' ? 'active' : '' %>" href="/lego/sets?theme=Castle">Fortress</a></li>
           </ul>
         </details>
       </li>
