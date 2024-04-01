@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/main.css">
+  <title>Lego Set Collection</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+  <section class="hero bg-base-200 rounded-lg p-6">
+    <div class="text-center">
+      <h1 class="text-5xl font-bold">Discover the World of Lego</h1>
+      <p>Step into a universe of imagination and creativity with Lego.</p>
+      <a href="/lego/sets" class="btn btn-primary">Start Your Adventure</a>
+    </div>
+  </section>
+  <section class="container mx-auto p-5 grid grid-cols-3 gap-4">
+    <article class="card bg-base-100 shadow-xl">
+      <img src="https://cdn.rebrickable.com/media/sets/1000430096-8.jpg" alt="Lego set" class="card-img">
+      <div class="card-body">
+        <h2 class="card-title">Metropolitan Vibe</h2>
+        <p>A snapshot of city life in Lego form, crafted in 1965.</p>
+        <a href="/lego/sets/1000430096-8" class="btn btn-primary">Explore Set</a>
+      </div>
+    </article>
+    <article class="card bg-base-100 shadow-xl">
+      <img src="https://cdn.rebrickable.com/media/sets/10003-1.jpg" alt="Lego Set" class="card-img">
+      <div class="card-body">
+        <h2 class="card-title">Nursery Furniture</h2>
+        <p>Classic Duplo set - create a nursery for your minis.</p>
+        <a href="/lego/sets/10003-1" class="btn btn-primary">View</a>
+      </div>
+    </article>
+    <article class="card bg-base-100 shadow-xl">
+      <img src="https://cdn.rebrickable.com/media/sets/10002-1.jpg" alt="Lego Set" class="card-img">
+      <div class="card-body">
+        <h2 class="card-title">The Race to Build It Board Game</h2>
+        <p>Classic game - released in 1999.</p>
+        <a href="/lego/sets/10002-1" class="btn btn-primary">View</a>
+      </div>
+    </article>
+  </section>
+</body>
+</html>

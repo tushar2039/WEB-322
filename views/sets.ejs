@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lego Collection</title>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <%- include('partials/navbar',{page: '/lego/sets'}) %>
+
+  <!-- Hero -->
+  <div class="container mx-auto mt-10">
+    <div class="hero bg-base-100 rounded-lg p-0">
+      <div class="hero-content text-center">
+        <div class="max-w-l" style="max-width: 100%;">
+          <div class="bg-base-200 p-6">
+            <h1 class="text-5xl font-bold black_gradient">Collection</h1>
+            <br>
+            <p>Browse the entire collection. Click the theme to filter by<br> 
+                theme such as : 
+                <a href="/lego/sets?theme=technic" class="btn btn-primary">TECHNIC</a>
+                <a href="/lego/sets?theme=classic" class="btn btn-primary">CLASSIC TOWN</a>
+                <a href="/lego/sets?theme=supplemental" class="btn btn-primary">SUPPLEMENTAL</a>
+            </p>
+            <p>Filter by specific sets:</p>
+            <ul>
+              <li><a href="/lego/sets?theme=Technic">Technic</a></li>
+              <li><a href="/lego/sets?theme=Classic Town">Classic Town</a></li>
+              <li><a href="/lego/sets?theme=Supplemental">Supplemental</a></li>
+              <!-- Add more links for other themes as needed -->
+            </ul>
+          </div>
+          <br><br>
+          <!-- Table for Lego sets data -->
+          <table class="table table-zebra table-pin-rows table-pin-cols table-md">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Theme</th>
+                <th>Year</th>
+                <th>Number of Parts</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% sets.forEach((set, index) => { %>
+                <tr class="<%= index % 2 === 0 ? 'bg-base-100' : '' %>">
+                  <td><img src="<%= set.img_url %>" alt="<%= set.name %>" style="width: 300px; height: 150px; border-radius: 10px;" /></td>
+                  <td><%= set.name %></td>
+                  <td><a class="btn" href="/lego/sets?theme=<%= set.theme %>"><%= set.theme %></a></td>
+                  <td><%= set.year %></td>
+                  <td><%= set.num_parts %></td>
+                  <td><a class="btn" href="/lego/sets/<%= set.set_num %>">Details</a></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
