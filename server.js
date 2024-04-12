@@ -1,5 +1,5 @@
 /********************************************************************************
-*  WEB322 – Assignment 04
+*  WEB322 – Assignment 05
 * 
 *  I declare that this assignment is my own work in accordance with Seneca's
 *  Academic Integrity Policy:
@@ -13,11 +13,15 @@
 // Importing modules
 const legoData = require("./modules/legoSets");
 const express = require('express');
+const bodyParser = require('body-parser'); // For parsing POST request body
 
 const app = express();
-const port = 3000; // Port number
+const port = process.env.PORT || 3000; // Port number using environment variable
 
 app.set('view engine', 'ejs');
+
+// Middleware for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
@@ -25,7 +29,7 @@ app.use(express.static('public'));
 // Initializing the data
 legoData.initialize().then(() => {
     console.log("Lego data is initialized.");
-    app.listen(port, () => console.log(`Port used for server: ${port}`)); // Starts the server
+    app.listen(port, () => console.log(`Server is running on port: ${port}`)); // Starts the server
 }).catch(err => {
     console.error("Lego data is not initialized", err);
 });
@@ -64,6 +68,60 @@ app.get("/lego/sets/:set_num", async (req, res) => {
     }
 });
 
+// Route to display the form for adding a new set
+app.get("/lego/addSet", (req, res) => {
+    legoData.getThemes().then(themes => {
+        res.render("addSet", { themes: themes, page: "/lego/addSet" });
+    }).catch(error => {
+        res.status(500).send(error.message);
+    });
+});
+
+// Route to handle the form submission for adding a new set
+app.post("/lego/addSet", (req, res) => {
+    legoData.addSet(req.body).then(() => {
+        res.redirect("/lego/sets");
+    }).catch(error => {
+        res.status(500).render('500', { message: error.message });
+    });
+});
+
+// Route to display the form for editing an existing set
+app.get("/lego/editSet/:num", async (req, res) => {
+    try {
+        const setPromise = legoData.getSetByNum(req.params.num);
+        const themesPromise = legoData.getThemes();
+
+        const [set, themes] = await Promise.all([setPromise, themesPromise]);
+
+        if (!set) {
+            return res.status(404).render('404', { page: "", message: "Set not found." });
+        }
+
+        res.render("editSet", { set: set, themes: themes, page: "/lego/editSet" });
+    } catch (error) {
+        res.status(500).render('500', { message: error.message });
+    }
+});
+
+// Route to process the form submission for editing an existing set
+app.post("/lego/editSet", async (req, res) => {
+    try {
+        await legoData.editSet(req.body.set_num, req.body);
+        res.redirect("/lego/sets");
+    } catch (error) {
+        res.status(500).render('500', { message: `I'm sorry, but we have encountered the following error: ${error.message}` });
+    }
+});
+// Route to delete an existing set
+app.get("/lego/deleteSet/:num", async (req, res) => {
+    try {
+        await legoData.deleteSet(req.params.num);
+        res.redirect("/lego/sets");
+    } catch (error) {
+        res.render("500", { message: `I'm sorry, but we have encountered the following error: ${error.message}` });
+    }
+});
 // Custom 404 route
 app.use((req, res) => {
     res.status(404).render('404', { page: "" });
